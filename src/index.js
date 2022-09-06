@@ -21,3 +21,7 @@ server.get('/movies', (req, res) => {
     };
     res.json(response);
   });
+
+
+  const staticServer = './public-react';
+  server.use(express.static(staticServer) );
