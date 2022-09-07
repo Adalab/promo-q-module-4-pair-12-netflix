@@ -7,12 +7,13 @@ const sendLoginToApi = data => {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
-      email: userEmail,
-      password: userPassword
+      email: data.email,
+      password: data.password
     })
   })
     .then(response => response.json())
     .then(() => {
+
       // CAMBIA EL CONTENIDO DE ESTE THEN PARA GESTIONAR LA RESPUESTA DEL SERVIDOR Y RETORNAR AL COMPONENTE APP LO QUE NECESITA
       if (data.email.includes('gmail')) {
         return {
