@@ -32,14 +32,14 @@ server.get('/movies', (req, res) => {
       if(users.find( user => user.email === req.body.email && user.password === req.body.password)){
         console.log('si esta email');
         res.json({
-          success : true,
-          userId: "id_de_la_usuaria_encontrada"
+          "success": true,
+          "userId": "id_de_la_usuaria_encontrada"
         })
       }else {
         console.log('no esta bien');
         res.json({
-          success: false,
-          errorMessage: "Usuaria/o no encontrada/o"
+          "success": false,
+  "errorMessage": "Usuaria/o no encontrada/o"
         })
       }
     }
