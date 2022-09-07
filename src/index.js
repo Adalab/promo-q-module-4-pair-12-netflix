@@ -22,6 +22,10 @@ server.get('/movies', (req, res) => {
     res.json(response);
   });
 
+  server.post('/login' , )
 
   const staticServer = './src/public-react';
   server.use(express.static(staticServer) );
+
+  const staticImagesServer = './src/public-movies-images';
+  server.use(express.static(staticImagesServer) );
