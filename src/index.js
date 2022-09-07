@@ -5,16 +5,26 @@ const users = require('./data/users.json');
 
 usersList= [];
 
+
+
 // create and config server
 const server = express();
 server.use(cors());
 server.use(express.json());
+server.set('view engine', 'ejs');
+
+
+
+const staticStyle = './public';
+server.use(express.static(staticStyle));
 
 // init express aplication
 const serverPort = 4000;
 server.listen(serverPort, () => {
   console.log(`Server listening at http://localhost:${serverPort}`);
 });
+
+
 
 
 server.get('/movies', (req, res) => {
@@ -45,6 +55,18 @@ server.get('/movies', (req, res) => {
     }
    
   } );
+
+  
+  server.get('/movie/:movieId', (req, res) => { 
+   
+    console.log( req.params.movieId);
+        
+const foundMovie = data.find( (movie) =>{ return movie.id === req.params.movieId } )
+ res.render('movie' , foundMovie)
+console.log( foundMovie);
+
+   });
+
 
   const staticServer = './src/public-react';
   server.use(express.static(staticServer) );
