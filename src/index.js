@@ -1,10 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const users = require('./data/users.json');
 const Database = require('better-sqlite3');
-
-usersList = [];
-
 
 
 // create and config server
@@ -13,7 +9,7 @@ server.use(cors());
 server.use(express.json());
 server.set('view engine', 'ejs');
 
-const db = new Database('./src/db/database.db', { verbose: console.log });
+const db = new Database('./src/db/database.db', { verbose: console.log }); 
 
 
 
@@ -30,14 +26,13 @@ server.get('/movies/', (req, res) => {
   // preparamos la query
   const query = db.prepare('SELECT * FROM movies');
   // ejecutamos la query
-  const movies = query.all();
-  console.log(movies);
-  res.json(movies)
+  const response = query.all();
+  console.log(response);
+  res.json(response)
 });
 
 
-server.post('/login', (req, res) => {
-  {
+server.post('/login', (req, res) => {{
     console.log('me llaman ');
     console.log(req.body);
 
@@ -46,11 +41,11 @@ server.post('/login', (req, res) => {
       'SELECT * FROM users WHERE email = ? AND password = ?'
     );
     // la ejecutamos indicando: SELECT * FROM users  WHERE email = 'lucia@hotmail.com' AND password = 'qwertyui'
-    const users = query.get('req.body');
-    console.log(users);
+  /*   const users = query.get('req.body');
+    console.log(users); */
+      console.log(query);
 
-
-    if (users.find(user => user.email === req.body.email && user.password === req.body.password)) {
+    if (query.find(user => user.email === req.body.email && user.password === req.body.password)) {
       console.log('si esta email');
       res.json({
         "success": true,
@@ -86,8 +81,13 @@ server.get('/movie/:movieId', (req, res) => {
 });
 
 
+server.get('*', (req, res) => { 
+  res.send('<p>No hay nada aquí</p>')
+})
+
 const staticServer = './src/public-react';
 server.use(express.static(staticServer));
 
 const staticImagesServer = './src/public-movies-images';
 server.use(express.static(staticImagesServer));
+
