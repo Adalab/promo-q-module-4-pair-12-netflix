@@ -9,7 +9,7 @@ server.use(cors());
 server.use(express.json());
 server.set('view engine', 'ejs');
 
-const db = new Database('./src/db/database.db', { verbose: console.log }); 
+const db = new Database('./src/db/database.db', { verbose: console.log });
 
 
 
@@ -32,7 +32,8 @@ server.get('/movies/', (req, res) => {
 });
 
 
-server.post('/login', (req, res) => {{
+server.post('/login', (req, res) => {
+  {
     console.log('me llaman ');
     console.log(req.body);
 
@@ -40,12 +41,11 @@ server.post('/login', (req, res) => {{
     const query = db.prepare(
       'SELECT * FROM users WHERE email = ? AND password = ?'
     );
-    // la ejecutamos indicando: SELECT * FROM users  WHERE email = 'lucia@hotmail.com' AND password = 'qwertyui'
-  /*   const users = query.get('req.body');
-    console.log(users); */
-      console.log(query);
+    console.log(query);
+    const response = query.get(req.body.email, req.body.password);
+    console.log(response);
 
-    if (query.find(user => user.email === req.body.email && user.password === req.body.password)) {
+/*     if (query.find(user => user.email === req.body.email && user.password === req.body.password)) {
       console.log('si esta email');
       res.json({
         "success": true,
@@ -57,7 +57,7 @@ server.post('/login', (req, res) => {{
         "success": false,
         "errorMessage": "Usuaria/o no encontrada/o"
       })
-    }
+    } */
   }
 
 });
@@ -81,13 +81,13 @@ server.get('/movie/:movieId', (req, res) => {
 });
 
 
-server.get('*', (req, res) => { 
-  res.send('<p>No hay nada aquí</p>')
-})
-
 const staticServer = './src/public-react';
 server.use(express.static(staticServer));
 
 const staticImagesServer = './src/public-movies-images';
 server.use(express.static(staticImagesServer));
 
+
+server.get('*', (req, res) => {
+  res.send('<p>No hay nada aquí</p>')
+})
